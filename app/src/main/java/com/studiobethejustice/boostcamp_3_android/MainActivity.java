@@ -3,14 +3,15 @@ package com.studiobethejustice.boostcamp_3_android;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.studiobethejustice.boostcamp_3_android.model.SearchResult;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,9 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
     final String SEARCH_URL = "https://openapi.naver.com/v1/search/movie?query=";
 
-    EditText mTextSearch;
-    Button mButtonSearch;
-    RecyclerView mRecyclerResult;
+    private EditText mTextSearch;
+    private Button mButtonSearch;
+    private RecyclerView mRecyclerResult;
+    private ItemAdapter mItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mButtonSearch = findViewById(R.id.btn_search);
         mRecyclerResult = findViewById(R.id.recycler_view);
 
-        //Volley setting
-        if (AppHelper.requestQueue == null) AppHelper.requestQueue = Volley.newRequestQueue(this);
-
+        //Search button
         mButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,14 +68,23 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
             resultProcess(s);
         }
     }
 
     private void resultProcess(String s) {
         Gson gson = new Gson();
+        SearchResult searchResult = gson.fromJson(s, SearchResult.class);
 
-        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+        //set recyclerView;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerResult.setLayoutManager(layoutManager);
+        mItemAdapter = new ItemAdapter(this);
+        mRecyclerResult.setAdapter(mItemAdapter);
+
+        mItemAdapter.addAllItem(searchResult.getItem());
+        mItemAdapter.notifyDataSetChanged();
+
+        Toast.makeText(this, searchResult.getItem().toString(), Toast.LENGTH_LONG).show();
     }
 }
