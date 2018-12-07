@@ -16,12 +16,14 @@ import com.studiobethejustice.boostcamp_3_android.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<Item> items = new ArrayList<>();
     private Context mContext;
 
-    public ItemAdapter(Context context) { this.mContext = context;}
+    public ItemAdapter(Context context) {
+        this.mContext = context;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,24 +49,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivPoster;
-        TextView tvTitle;
-        TextView tvPubYear;
-        TextView tvActors;
-        RatingBar ratingBar;
-
+        private ImageView ivPoster;
+        private TextView tvTitle;
+        private RatingBar ratingBar;
+        private TextView tvPubYear;
+        private TextView tvDirector;
+        private TextView tvActors;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             ivPoster = itemView.findViewById(R.id.img_poster);
             tvTitle = itemView.findViewById(R.id.text_title);
-            tvPubYear = itemView.findViewById(R.id.text_year);
-            tvActors = itemView.findViewById(R.id.text_actor);
             ratingBar = itemView.findViewById(R.id.rating);
+            tvPubYear = itemView.findViewById(R.id.text_year);
+            tvDirector = itemView.findViewById(R.id.text_director);
+            tvActors = itemView.findViewById(R.id.text_actor);
         }
 
-        public void setItem(Item item){
+        public void setItem(Item item) {
 
             Glide.with(mContext)
                     .load(item.getImage())
@@ -72,7 +75,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
 
             this.tvTitle.setText(Html.fromHtml(item.getTitle()));
             this.tvPubYear.setText(String.valueOf(item.getPubDate()));
-            this.ratingBar.setRating(item.getUserRating()/2);
+            this.ratingBar.setRating(item.getUserRating() / 2);
+            this.tvDirector.setText(Html.fromHtml(item.getDirector()));
             this.tvActors.setText(Html.fromHtml(item.getActor()));
         }
     }
