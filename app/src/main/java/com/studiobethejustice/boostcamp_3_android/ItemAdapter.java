@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.studiobethejustice.boostcamp_3_android.model.Item;
 
 import java.util.ArrayList;
@@ -86,8 +87,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         public void setItem(Item item) {
 
+
+            RequestOptions options = new RequestOptions();
+            options.centerCrop();
             Glide.with(mContext)
                     .load(item.getImage())
+                    .apply(options)
                     .into(ivPoster);
 
             this.tvTitle.setText(Html.fromHtml(item.getTitle()));
