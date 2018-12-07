@@ -1,14 +1,17 @@
 package com.studiobethejustice.boostcamp_3_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.studiobethejustice.boostcamp_3_android.model.Item;
@@ -17,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+
+    private static final String TAG = "ItemAdapter";
 
     private List<Item> items = new ArrayList<>();
     private Context mContext;
@@ -33,9 +38,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Item item = items.get(position);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final Item item = items.get(position);
         holder.setItem(item);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mContext, WebViewActivity.class);
+                intent.putExtra("link", item.getLink());
+                mContext.startActivity(intent);
+                Log.d(TAG, "onClick: item clicked"+position);
+                Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
