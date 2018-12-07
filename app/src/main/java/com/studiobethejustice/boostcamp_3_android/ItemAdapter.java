@@ -2,6 +2,7 @@ package com.studiobethejustice.boostcamp_3_android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,10 +64,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         }
 
         public void setItem(Item item){
-            this.tvTitle.setText(item.getTitle());
+            this.tvTitle.setText(Html.fromHtml(item.getTitle()));
             this.tvPubYear.setText(String.valueOf(item.getPubDate()));
             this.ratingBar.setRating(item.getUserRating()/2);
-            this.tvActors.setText(item.getActor());
+            this.tvActors.setText(Html.fromHtml(item.getActor()));
         }
     }
 }
