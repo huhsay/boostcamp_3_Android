@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.studiobethejustice.boostcamp_3_android.model.Item;
 
 import java.util.ArrayList;
@@ -64,6 +65,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         }
 
         public void setItem(Item item){
+
+            Glide.with(mContext)
+                    .load(item.getImage())
+                    .into(ivPoster);
+
             this.tvTitle.setText(Html.fromHtml(item.getTitle()));
             this.tvPubYear.setText(String.valueOf(item.getPubDate()));
             this.ratingBar.setRating(item.getUserRating()/2);
