@@ -1,23 +1,22 @@
-package com.studiobethejustice.boostcamp_3_android;
+package com.studiobethejustice.boostcamp_3_android.view;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.studiobethejustice.boostcamp_3_android.R;
+
 public class WebViewActivity extends AppCompatActivity {
 
     private WebView mWebView;
     private WebSettings mWebSettings;
-    private ProgressBar mProgressBar;
     private ActionBar mActionbar;
 
     @Override

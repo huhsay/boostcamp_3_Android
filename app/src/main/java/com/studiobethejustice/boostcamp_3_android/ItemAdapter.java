@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.studiobethejustice.boostcamp_3_android.model.Item;
+import com.studiobethejustice.boostcamp_3_android.view.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;

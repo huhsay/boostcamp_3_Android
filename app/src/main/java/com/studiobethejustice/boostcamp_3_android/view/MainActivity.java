@@ -1,4 +1,4 @@
-package com.studiobethejustice.boostcamp_3_android;
+package com.studiobethejustice.boostcamp_3_android.view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.studiobethejustice.boostcamp_3_android.ItemAdapter;
+import com.studiobethejustice.boostcamp_3_android.R;
+import com.studiobethejustice.boostcamp_3_android.SearchThread;
 import com.studiobethejustice.boostcamp_3_android.model.SearchResult;
 
 public class MainActivity extends AppCompatActivity {
