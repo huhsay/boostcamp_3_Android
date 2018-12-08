@@ -88,7 +88,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         public void setItem(Item item) {
 
-
             RequestOptions options = new RequestOptions();
             options.centerCrop();
             Glide.with(mContext)

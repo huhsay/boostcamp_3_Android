@@ -1,10 +1,12 @@
 package com.studiobethejustice.boostcamp_3_android.view;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     final String SEARCH_URL = "https://openapi.naver.com/v1/search/movie?query=";
 
+    private Context mContext;
     private EditText mTextSearch;
     private Button mButtonSearch;
     private RecyclerView mRecyclerResult;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mTextSearch = findViewById(R.id.edit_text_search);
         mButtonSearch = findViewById(R.id.btn_search);
         mRecyclerResult = findViewById(R.id.recycler_view);
+        mContext = getApplicationContext();
 
         //Search button
         mButtonSearch.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String searchWord = mTextSearch.getText().toString().trim();
+
+                // 검색어 빈칸 처리
+                if(searchWord.equals(null) || searchWord.equals("")){
+                    Toast.makeText(mContext, "검색어를 입력해 주세요", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 SearchTask searchTask = new SearchTask(SEARCH_URL, searchWord);
                 searchTask.execute();
 
@@ -78,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
     private void resultProcess(String s) {
         Gson gson = new Gson();
         SearchResult searchResult = gson.fromJson(s, SearchResult.class);
+
+        // 검색결과 없을 때.
+        if(searchResult.getTotal()==0){
+            Toast.makeText(this, "검색결과가 없습니다.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //set recyclerView;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

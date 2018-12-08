@@ -17,7 +17,6 @@ public class SearchThread{
     String searchURL;
     StringBuffer response;
 
-
     public String request(String searchURL, String searchWord) {
 
         this.searchURL = searchURL;
@@ -49,7 +48,6 @@ public class SearchThread{
             }
             br.close();
             System.out.println(response.toString());
-
 
         } catch (Exception e) {
             System.out.println(e);
