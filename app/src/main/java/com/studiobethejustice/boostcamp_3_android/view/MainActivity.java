@@ -3,10 +3,10 @@ package com.studiobethejustice.boostcamp_3_android.view;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.studiobethejustice.boostcamp_3_android.ItemAdapter;
 import com.studiobethejustice.boostcamp_3_android.R;
 import com.studiobethejustice.boostcamp_3_android.SearchThread;
+import com.studiobethejustice.boostcamp_3_android.WaitDialog;
 import com.studiobethejustice.boostcamp_3_android.model.SearchResult;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerResult = findViewById(R.id.recycler_view);
         mContext = getApplicationContext();
 
-        //Search button
+        //Search button event
         mButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 String searchWord = mTextSearch.getText().toString().trim();
 
                 // 검색어 빈칸 처리
-                if(searchWord.equals(null) || searchWord.equals("")){
-                    Toast.makeText(mContext, "검색어를 입력해 주세요", Toast.LENGTH_LONG).show();
+                if (searchWord.equals(null) || searchWord.equals("")) {
+                    Toast.makeText(mContext, R.string.dial_no_keyword, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -64,10 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         String searchURL;
         String searchWord;
+        WaitDialog dialog = new WaitDialog(MainActivity.this);
 
         public SearchTask(String searchURL, String searchWord) {
             this.searchURL = searchURL;
             this.searchWord = searchWord;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.show();
+            super.onPreExecute();
         }
 
         @Override
@@ -81,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            super.onPostExecute(s);
             resultProcess(s);
+            dialog.dismiss();
+            super.onPostExecute(s);
         }
     }
 
@@ -91,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
         SearchResult searchResult = gson.fromJson(s, SearchResult.class);
 
         // 검색결과 없을 때.
-        if(searchResult.getTotal()==0){
-            Toast.makeText(this, "검색결과가 없습니다.", Toast.LENGTH_LONG).show();
+        if (searchResult.getTotal() == 0) {
+            Toast.makeText(this, R.string.dial_no_result, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -104,7 +113,5 @@ public class MainActivity extends AppCompatActivity {
 
         mItemAdapter.addAllItem(searchResult.getItem());
         mItemAdapter.notifyDataSetChanged();
-
-        Toast.makeText(this, searchResult.getItem().toString(), Toast.LENGTH_LONG).show();
     }
 }

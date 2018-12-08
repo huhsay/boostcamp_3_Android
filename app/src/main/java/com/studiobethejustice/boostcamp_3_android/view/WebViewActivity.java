@@ -9,7 +9,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import com.studiobethejustice.boostcamp_3_android.R;
 
@@ -38,6 +37,7 @@ public class WebViewActivity extends AppCompatActivity {
         mWebSettings = mWebView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setLoadWithOverviewMode(true);
+        mWebSettings.setUseWideViewPort(true); //웹뷰 가로 비율
 
         mWebView.loadUrl(link);
     }

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -51,8 +50,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 Intent intent = new Intent(mContext, WebViewActivity.class);
                 intent.putExtra("link", item.getLink());
                 mContext.startActivity(intent);
-                Log.d(TAG, "onClick: item clicked"+position);
-                Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onClick: item clicked" + position);
             }
         });
     }

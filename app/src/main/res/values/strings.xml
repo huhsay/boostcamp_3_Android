@@ -2,4 +2,11 @@
     <string name="app_name">부스트캠프 사전과제</string>
 
     <string name="btn_search">검색</string>
+
+    <!-- error -->
+    <string name="dial_no_keyword">검색어를 입력해주세요.</string>
+    <string name="dial_no_result">검색결과가 없습니다.</string>
+
+    <!-- dialog -->
+    <string name="dial_waiting">잠시만요...</string>
 </resources>

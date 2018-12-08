@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class SearchThread{
+public class SearchThread {
     private static final String TAG = "SearchThread";
     final String clientId = "nkAhHANDxYvZUtA3dE06";
     final String clientSecret = "q5D_4UF3vo";
@@ -41,6 +41,7 @@ public class SearchThread{
                 Log.d(TAG, "sendRequest: error");
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
+
             String inputLine;
             response = new StringBuffer();
             while ((inputLine = br.readLine()) != null) {
