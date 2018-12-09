@@ -1,10 +1,14 @@
 package com.studiobethejustice.boostcamp_3_android;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +19,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.studiobethejustice.boostcamp_3_android.model.Item;
-import com.studiobethejustice.boostcamp_3_android.view.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +49,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bitmap backArrowBitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_arrow_back_white_14dp);
 
-                Intent intent = new Intent(mContext, WebViewActivity.class);
-                intent.putExtra("link", item.getLink());
-                mContext.startActivity(intent);
-                Log.d(TAG, "onClick: item clicked" + position);
+                // chrome custom tabs
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                builder.setToolbarColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+                builder.setCloseButtonIcon(backArrowBitmap);
+                builder.setStartAnimations(mContext, R.anim.slide_in_right, R.anim.slide_out_left);
+                builder.setExitAnimations(mContext, R.anim.slide_in_left, R.anim.slide_out_right);
+                CustomTabsIntent intent = builder.build();
+                intent.launchUrl((AppCompatActivity) mContext, Uri.parse(item.getLink()));
             }
         });
     }
